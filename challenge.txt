@@ -1,0 +1,80 @@
+What You'll Be Doing
+The Scenario
+You are a full-stack engineer at arrivia, a global travel loyalty technology company that powers white-label booking platforms for banks, financial institutions, and membership organizations worldwide.
+
+arrivia's platform handles 30,000+ itineraries across 700 airlines, 1M+ hotels, and 30,000 rental car locations. Partners integrate arrivia's booking engine, loyalty currency, and marketing tools into their own branded experiences — meaning arrivia operates a multi-tenant, white-label architecture where partner-specific configuration, branding, and pricing rules must coexist on a shared platform.
+
+Your team has been tasked with building a new internal service: an Agentic Travel Recommendations API. This service will allow AI agents (powered by tools like Claude Code and MCP integrations) to query a member's travel history, loyalty tier, and partner-specific rules to generate personalized travel recommendations. The goal is to power a new 'AI Concierge' feature that partner brands can embed in their booking portals.
+
+Here is what you know:
+
+The member data service already exists as a RESTful API (you can mock it). It returns: member ID, loyalty tier (Silver/Gold/Platinum), travel history (last 5 bookings with destination, dates, and booking type), and partner ID.
+Partner-specific rules vary: some partners cap recommendations at 3 per session; others allow unlimited. Some partners exclude cruise offers entirely. These rules are stored in a partner configuration service (you can mock this too).
+The AI agent will call your service via MCP — your API must expose endpoints that an AI agent can discover and invoke through a Model Context Protocol server.
+Read the provided constraints carefully — they define what you can and cannot change.
+
+
+Constraints
+Existing infrastructure only: Your service must work within arrivia's current cloud and technology stack (AWS/Azure services, containerized deployment). Do not propose a new infrastructure layer or third-party platform that arrivia does not already use.
+Partner configuration is read-only: You cannot modify the partner configuration service. You can only read from it. Your service must respect whatever rules the partner config returns, even if they seem suboptimal.
+Four-week first step: Scope your implementation to what a single engineer could realistically ship in four weeks. Your README should identify what ships first vs. what comes later.
+On-call ownership: You and your team will own this service in production. Whatever you build, you are on call for at 2am. Design accordingly.
+
+What You'll Accomplish
+Build a working MCP server endpoint that an AI agent can discover and invoke
+
+Implement partner-specific rule enforcement in a multi-tenant architecture
+
+Design for production reliability with failure mode awareness
+
+Demonstrate critical evaluation and iterative use of AI coding tools
+
+Scope a realistic four-week delivery plan for a new internal service
+
+Build a working proof-of-concept for the Agentic Travel Recommendations API
+Include at least one MCP server endpoint that an AI agent could discover and invoke (e.g., get_recommendations, get_member_profile)
+Implement partner-specific rule enforcement — the service must respect partner configuration (recommendation caps, category exclusions)
+Use any language and framework from arrivia's stack: TypeScript/JavaScript, Python, or C#/.NET
+Include both a backend API and a minimal frontend or CLI that demonstrates the recommendation flow end-to-end
+Mock the upstream services (member data, partner config) — we are evaluating your service design, not your ability to integrate with real APIs
+
+Section A — Architecture & Trade-offs (300–500 words)
+Architecture Overview
+Explain your architecture: how the recommendation service, MCP server, member data, and partner config interact.
+
+Design Trade-offs
+Name at least two design trade-offs you made and explain why you chose this approach over alternatives.
+
+Handling Partner Configuration Changes
+Describe how your service handles a partner that suddenly changes their recommendation cap or adds a new category exclusion — what would need to change?
+
+Section B — Production Readiness & Incident Response
+Incident Runbook Entry
+Write a brief incident runbook entry: a member reports that the AI Concierge is showing cruise recommendations even though their partner's configuration excludes cruises. Walk through how you would diagnose, confirm, and resolve this in production.
+
+Part B2 — Required Reasoning Question (answer without AI assistance)
+Describe a scenario where an AI coding assistant would give you a plausible but incorrect answer for this type of problem — building an API that enforces partner-specific business rules. Explain specifically how you would catch the error and what you would check before acting on it.
+
+Section C — AI Usage Log (Mandatory)
+This is not a trick. We want to see how you work with AI — not whether you used it.
+
+In a short section of your README, document your AI collaboration process. For each significant interaction with an AI tool, briefly note:
+
+What you asked the AI to help with
+What it gave you
+What you kept, changed, or rejected — and why
+Three interactions documented is sufficient. The log does not need to be exhaustive.
+
+Video Walkthrough
+Video
+Required
+Format: .mp4, .mov, .webm
+
+Senior / Level III: 8–10 minutes | Level I / II: 5–7 minutes
+Record your walkthrough as an MP4 or MOV file and upload it directly on the Provn platform as a separate file.
+Structure your video as follows:
+
+Summary (60 seconds): The problem, your approach, and your recommended architecture.
+Code walkthrough (2–4 minutes): Walk through your implementation — explain your MCP server design, how partner rules are enforced, and one design decision you are most proud of.
+What would you do differently? (1–2 minutes): If you had another hour, what would you change? What would you validate before shipping this to production?
+Mandatory AI question: Walk me through one moment where you disagreed with, pushed back on, or redirected what the AI gave you — and what you did instead. Name the specific moment. Explain what the AI produced that did not meet the bar, what you did differently, and why.

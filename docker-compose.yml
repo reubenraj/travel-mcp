@@ -1,0 +1,59 @@
+services:
+  member-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    command: uvicorn services.mock_member_service:app --host 0.0.0.0 --port 8001
+    ports:
+      - "8001:8001"
+    volumes:
+      - sqlite-data:/app/db
+    env_file:
+      - .env
+
+  partner-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    command: uvicorn services.mock_partner_service:app --host 0.0.0.0 --port 8002
+    ports:
+      - "8002:8002"
+    volumes:
+      - sqlite-data:/app/db
+    env_file:
+      - .env
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite-data:/app/db
+    env_file:
+      - .env
+    environment:
+      - MEMBER_SERVICE_URL=http://member-service:8001
+      - PARTNER_SERVICE_URL=http://partner-service:8002
+    depends_on:
+      - member-service
+      - partner-service
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - API_URL=http://api:8000
+      - MEMBER_SERVICE_URL=http://member-service:8001
+    depends_on:
+      - api
+
+volumes:
+  sqlite-data:

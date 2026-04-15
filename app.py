@@ -10,9 +10,13 @@ Run with:
 
 import httpx
 import streamlit as st
+import os
+from dotenv import load_dotenv
 
-API_URL            = "http://localhost:8000"
-MEMBER_SERVICE_URL = "http://localhost:8001"
+load_dotenv()
+
+API_URL            = os.getenv("API_URL",            "http://localhost:8000")
+MEMBER_SERVICE_URL = os.getenv("MEMBER_SERVICE_URL", "http://localhost:8001")
 
 TIER_COLORS = {
     "Platinum": "#534AB7",

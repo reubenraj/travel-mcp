@@ -9,8 +9,8 @@ Built as a technical challenge submission for arrivia / Provn.
 ## What it does
 
 - A member asks for travel recommendations through a chat interface
-- Claude calls three MCP tools in sequence to fetch member profile, partner rules, and filtered recommendations
-- Partner rules are enforced **before** Claude sees any data — category exclusions and recommendation caps are applied deterministically
+- The recommendation service fetches member context and partner rules, enforces category exclusions and caps deterministically, then passes the filtered results to the Claude agent
+- Claude calls three MCP tools in sequence — independently discovering member profile, partner rules, and the pre-filtered recommendations
 - Claude generates a personalised response using only the rule-compliant offers
 
 ---
